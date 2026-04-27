@@ -1,0 +1,1 @@
+Explain [topic] as if I'm intelligent but have zero background in it. Use one unexpected real-world analogy that makes the core idea immediately click. Then give me the 3 things I need to understand before I go any deeper.

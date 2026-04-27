@@ -1,0 +1,1 @@
+I've just studied [topic]. Give me a realistic, high-stakes scenario where I must apply this knowledge to solve a problem. After I respond, break down my reasoning: what I applied correctly, what I missed, and what an expert would have done differently.

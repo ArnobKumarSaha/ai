@@ -1,0 +1,1 @@
+Quiz me on [topic] with 10 progressive questions — start simple, build to expert-level. After every answer I give: tell me what I got right, what I missed, the underlying principle, and one follow-up question to go deeper.
