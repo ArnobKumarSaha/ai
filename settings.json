@@ -1,0 +1,34 @@
+{
+  "effortLevel": "*",
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git branch *)",
+      "Bash(git checkout *)",
+      "Bash(git commit *)",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(git push *)",
+      "Bash(git reset *)",
+      "Bash(git tag *)",
+
+      "Bash(go build *)",
+      "Bash(go env *)",
+      "Bash(go get *)",
+      "Bash(go mod tidy)",
+      "Bash(go mod vendor)",
+      "Bash(go mod tidy && go mod vendor)",
+
+      "Bash(gh auth status)",
+      "Bash(gh auth token)",
+      "Bash(gh pr create *)",
+
+      "Bash(npm i)",
+      "Bash(npm i *)",
+
+      "Bash(grep *)",
+      "Bash(jq *)"
+    ]
+  }
+}
+
