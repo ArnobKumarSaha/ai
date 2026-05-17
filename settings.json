@@ -1,34 +1,107 @@
 {
-  "effortLevel": "*",
+  "model": "sonnet",
+  "effortLevel": "medium",
+
+  "enabledMcpjsonServers": [
+    "github",
+    "kubernetes",
+    "fetch"
+  ],
+
+  "enabledPlugins": {
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+
+  "extraKnownMarketplaces": {
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    }
+  },
+
   "permissions": {
     "allow": [
-      "Bash(git add *)",
-      "Bash(git branch *)",
-      "Bash(git checkout *)",
-      "Bash(git commit *)",
-      "Bash(git fetch *)",
-      "Bash(git pull *)",
+      "Bash(*)"
+    ],
+    "deny": [
+      "Bash(sudo *)",
+
+      "Bash(rm *)",
+      "Bash(rmdir *)",
+      "Bash(shred *)",
+      "Bash(dd *)",
+      "Bash(mv *)",
+      "Bash(truncate *)",
+      "Bash(chmod *)",
+      "Bash(chown *)",
+
+      "Bash(kill *)",
+      "Bash(killall *)",
+      "Bash(iptables *)",
+      "Bash(ufw *)",
+
       "Bash(git push *)",
-      "Bash(git reset *)",
-      "Bash(git tag *)",
+      "Bash(git rm *)",
+      "Bash(git clean *)",
+      "Bash(git reset --hard*)",
+      "Bash(git rebase*)",
+      "Bash(git branch -D *)",
+      "Bash(git stash drop*)",
+      "Bash(git stash clear*)",
+      "Bash(git tag -d *)",
+      "Bash(git tag -f *)",
+      "Bash(git commit --amend*)",
+      "Bash(git reflog expire*)",
+      "Bash(git gc --prune*)",
+      "Bash(git remote set-url *)",
+      "Bash(git config --global *)",
+      "Bash(git filter-branch *)",
 
-      "Bash(go build *)",
-      "Bash(go env *)",
-      "Bash(go get *)",
-      "Bash(go mod tidy)",
-      "Bash(go mod vendor)",
-      "Bash(go mod tidy && go mod vendor)",
+      "Bash(kubectl delete *)",
+      "Bash(kubectl patch *)",
+      "Bash(kubectl create *)",
+      "Bash(kubectl apply *)",
+      "Bash(kubectl edit *)",
+      "Bash(kubectl exec *)",
+      "Bash(kubectl scale *)",
+      "Bash(kubectl drain *)",
+      "Bash(kubectl taint *)",
+      "Bash(kubectl cordon *)",
+      "Bash(kubectl uncordon *)",
+      "Bash(kubectl replace *)",
+      "Bash(kubectl rollout *)",
+      "Bash(kubectl proxy*)",
 
-      "Bash(gh auth status)",
-      "Bash(gh auth token)",
-      "Bash(gh pr create *)",
+      "Bash(helm install *)",
+      "Bash(helm upgrade *)",
+      "Bash(helm uninstall *)",
+      "Bash(helm delete *)",
+      "Bash(helm rollback *)",
+      "Bash(helm repo remove *)",
+      "Bash(helm plugin remove *)",
 
-      "Bash(npm i)",
-      "Bash(npm i *)",
+      "Bash(flux reconcile *)",
+      "Bash(flux delete *)",
+      "Bash(flux suspend *)",
+      "Bash(flux resume *)",
+      "Bash(flux create *)",
 
-      "Bash(grep *)",
-      "Bash(jq *)"
+      "Bash(docker rm *)",
+      "Bash(docker rmi *)",
+      "Bash(docker stop *)",
+      "Bash(docker kill *)",
+
+      "Bash(brew install *)",
+      "Bash(brew uninstall *)",
+      "Bash(brew upgrade *)",
+      "Bash(pip install *)",
+      "Bash(pip3 install *)",
+      "Bash(npm install -g *)",
+      "Bash(npm uninstall -g *)",
+      "Bash(go install *)"
     ]
   }
 }
-
