@@ -30,7 +30,7 @@
     "deny": [
       "Bash(sudo *)",
 
-      "Bash(rm *)",
+      "Bash(rm -rf *)",
       "Bash(rmdir *)",
       "Bash(shred *)",
       "Bash(dd *)",
@@ -43,8 +43,6 @@
       "Bash(killall *)",
       "Bash(iptables *)",
       "Bash(ufw *)",
-
-      "Bash(git push -f *)",
 
       "Bash(kubectl delete *)",
       "Bash(helm uninstall *)",
