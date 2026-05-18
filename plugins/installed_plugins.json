@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "plugins": {
+    "andrej-karpathy-skills@karpathy-skills": [
+      {
+        "scope": "user",
+        "installPath": "/Users/arnobkumarsaha/.claude/plugins/cache/karpathy-skills/andrej-karpathy-skills/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-05T17:31:26.565Z",
+        "lastUpdated": "2026-05-05T17:31:26.565Z",
+        "gitCommitSha": "2c606141936f1eeef17fa3043a72095b4765b9c2"
+      }
+    ],
+    "gopls-lsp@claude-plugins-official": [
+      {
+        "scope": "user",
+        "installPath": "/Users/arnobkumarsaha/.claude/plugins/cache/claude-plugins-official/gopls-lsp/1.0.0",
+        "version": "1.0.0",
+        "installedAt": "2026-05-17T12:15:31.907Z",
+        "lastUpdated": "2026-05-17T12:15:31.907Z"
+      }
+    ]
+  }
+}
