@@ -23,6 +23,7 @@
   },
 
   "permissions": {
+    "defaultMode": "auto",
     "allow": [
       "Bash(*)"
     ],
@@ -43,65 +44,22 @@
       "Bash(iptables *)",
       "Bash(ufw *)",
 
-      "Bash(git push *)",
-      "Bash(git rm *)",
-      "Bash(git clean *)",
-      "Bash(git reset --hard*)",
-      "Bash(git rebase*)",
-      "Bash(git branch -D *)",
-      "Bash(git stash drop*)",
-      "Bash(git stash clear*)",
-      "Bash(git tag -d *)",
-      "Bash(git tag -f *)",
-      "Bash(git commit --amend*)",
-      "Bash(git reflog expire*)",
-      "Bash(git gc --prune*)",
-      "Bash(git remote set-url *)",
-      "Bash(git config --global *)",
-      "Bash(git filter-branch *)",
+      "Bash(git push -f *)",
 
       "Bash(kubectl delete *)",
-      "Bash(kubectl patch *)",
-      "Bash(kubectl create *)",
-      "Bash(kubectl apply *)",
-      "Bash(kubectl edit *)",
-      "Bash(kubectl exec *)",
-      "Bash(kubectl scale *)",
-      "Bash(kubectl drain *)",
-      "Bash(kubectl taint *)",
-      "Bash(kubectl cordon *)",
-      "Bash(kubectl uncordon *)",
-      "Bash(kubectl replace *)",
-      "Bash(kubectl rollout *)",
-      "Bash(kubectl proxy*)",
-
-      "Bash(helm install *)",
-      "Bash(helm upgrade *)",
       "Bash(helm uninstall *)",
       "Bash(helm delete *)",
-      "Bash(helm rollback *)",
-      "Bash(helm repo remove *)",
-      "Bash(helm plugin remove *)",
 
-      "Bash(flux reconcile *)",
       "Bash(flux delete *)",
       "Bash(flux suspend *)",
-      "Bash(flux resume *)",
-      "Bash(flux create *)",
 
       "Bash(docker rm *)",
       "Bash(docker rmi *)",
       "Bash(docker stop *)",
       "Bash(docker kill *)",
 
-      "Bash(brew install *)",
       "Bash(brew uninstall *)",
-      "Bash(brew upgrade *)",
-      "Bash(pip install *)",
-      "Bash(pip3 install *)",
-      "Bash(npm install -g *)",
-      "Bash(npm uninstall -g *)",
-      "Bash(go install *)"
+      "Bash(brew upgrade *)"
     ]
   }
 }
