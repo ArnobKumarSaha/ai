@@ -20,8 +20,7 @@ Downloads an ACE installer archive from appscode.com and extracts it to `~/yamls
 
 ## Credentials
 
-**appscode.com (prod):** username: `arnob`, password: `REDACTED`
-**appscode.ninja (ninja/staging):** username: `arnob@appscode.com`, password: `REDACTED`
+Credentials are stored in `~/.claude/secrets/appscode.env`. Load them before use.
 
 Use prod credentials when the user says "prod" or "appscode.com" (default).
 Use ninja credentials when the user says "ninja" or "staging" or "appscode.ninja".
@@ -30,17 +29,17 @@ Use ninja credentials when the user says "ninja" or "staging" or "appscode.ninja
 
 ### Step 1: Set credentials
 
-Set credentials based on the target site (prod by default):
-
 ```bash
+source ~/.claude/secrets/appscode.env
+
 # Prod (appscode.com)
-USERNAME="arnob"
-PASSWORD=""
+USERNAME="${APPSCODE_PROD_USERNAME}"
+PASSWORD="${APPSCODE_PROD_PASSWORD}"
 BASE_URL="https://appscode.com"
 
 # Ninja/Staging (appscode.ninja)
-USERNAME="arnob@appscode.com"
-PASSWORD=""
+USERNAME="${APPSCODE_NINJA_USERNAME}"
+PASSWORD="${APPSCODE_NINJA_PASSWORD}"
 BASE_URL="https://appscode.ninja"
 ```
 
