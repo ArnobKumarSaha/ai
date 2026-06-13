@@ -1,35 +1,11 @@
 {
-  "model": "sonnet",
-  "effortLevel": "medium",
-
-  "enabledMcpjsonServers": [
-    "github",
-    "kubernetes",
-    "fetch"
-  ],
-
-  "enabledPlugins": {
-    "andrej-karpathy-skills@karpathy-skills": true,
-    "gopls-lsp@claude-plugins-official": true
-  },
-
-  "extraKnownMarketplaces": {
-    "karpathy-skills": {
-      "source": {
-        "source": "github",
-        "repo": "forrestchang/andrej-karpathy-skills"
-      }
-    }
-  },
-
   "permissions": {
-    "defaultMode": "auto",
     "allow": [
-      "Bash(*)"
+      "Bash(*)",
+      "mcp__claude-in-chrome__browser_batch"
     ],
     "deny": [
       "Bash(sudo *)",
-
       "Bash(rm -rf *)",
       "Bash(rmdir *)",
       "Bash(shred *)",
@@ -38,26 +14,68 @@
       "Bash(truncate *)",
       "Bash(chmod *)",
       "Bash(chown *)",
-
       "Bash(kill *)",
       "Bash(killall *)",
       "Bash(iptables *)",
       "Bash(ufw *)",
-
       "Bash(kubectl delete *)",
       "Bash(helm uninstall *)",
       "Bash(helm delete *)",
-
       "Bash(flux delete *)",
       "Bash(flux suspend *)",
-
       "Bash(docker rm *)",
       "Bash(docker rmi *)",
       "Bash(docker stop *)",
       "Bash(docker kill *)",
-
       "Bash(brew uninstall *)",
       "Bash(brew upgrade *)"
+    ],
+    "defaultMode": "auto"
+  },
+  "model": "sonnet",
+  "enabledMcpjsonServers": [
+    "github",
+    "kubernetes",
+    "fetch"
+  ],
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "root=$(git rev-parse --show-toplevel 2>/dev/null); [ -n \"$root\" ] && [ -f \"$root/Makefile\" ] && grep -q '^fmt:' \"$root/Makefile\" && make -C \"$root\" fmt 2>/dev/null || true",
+            "if": "Bash(git commit*)",
+            "timeout": 60,
+            "statusMessage": "Running make fmt..."
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "ctx=$(kubectl config current-context 2>/dev/null || echo 'none'); ns=$(kubectl config view --minify --output 'jsonpath={..namespace}' 2>/dev/null || echo 'default'); echo \"{\\\"systemMessage\\\": \\\"☸ k8s: $ctx | ns: ${ns:-default}\\\"}\""
+          }
+        ]
+      }
     ]
-  }
+  },
+  "enabledPlugins": {
+    "andrej-karpathy-skills@karpathy-skills": true,
+    "gopls-lsp@claude-plugins-official": true
+  },
+  "extraKnownMarketplaces": {
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    }
+  },
+  "effortLevel": "medium",
+  "skipAutoPermissionPrompt": true
 }
