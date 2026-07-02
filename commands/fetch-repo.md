@@ -3,11 +3,24 @@ allowed-tools: Bash
 description: Fetch and reset repos to a clean remote state. Usage: /fetch-repo <org> <repo1> [repo2 ...] [--branch <branch>]
 ---
 
-Run this bash script exactly as written. Do not explain, do not summarize — just execute it and print its output.
+Run this shell script exactly as written. Do not explain, do not summarize — just execute it and print its output.
+
+Invoke it with zsh if available, otherwise bash, e.g.:
+
+```bash
+( command -v zsh >/dev/null 2>&1 && exec zsh -c "$SCRIPT" ) || bash -c "$SCRIPT"
+```
 
 ```bash
 #!/usr/bin/env bash
 set -euo pipefail
+
+# Run under zsh or bash interchangeably: when invoked by zsh, enable
+# bash-like 0-based array indexing and word splitting so the body below
+# (associative arrays, ${ARGS[@]:1}) behaves identically in both shells.
+if [ -n "${ZSH_VERSION:-}" ]; then
+  setopt KSH_ARRAYS SH_WORD_SPLIT
+fi
 
 declare -A ORG_MAP=(
   [bytebuilders]="go.bytebuilders.dev"
