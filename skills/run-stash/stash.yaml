@@ -1,0 +1,37 @@
+apiVersion: stash.appscode.com/v1alpha1
+kind: Repository
+metadata:
+  name: minio-repo
+  namespace: demo
+spec:
+  backend:
+    s3:
+      endpoint: http://minio.minio.svc:9000
+      bucket: arnob
+      # prefix: /mongodb
+    storageSecretName: minio-secret
+
+---
+apiVersion: stash.appscode.com/v1beta1
+kind: BackupConfiguration
+metadata:
+  name: sample
+  namespace: demo
+spec:
+  schedule: "*/1 * * * *"
+  task:
+    name: mongodb-backup-5.0.15
+    params:
+      - name: args
+        value: --db config --excludeCollection=reshardingOperations
+  repository:
+    name: minio-repo
+  target:
+    ref:
+      apiVersion: appcatalog.appscode.com/v1alpha1
+      kind: AppBinding
+      name: mm # test
+  retentionPolicy:
+    name: keep-last-5
+    keepLast: 5
+    prune: true

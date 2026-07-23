@@ -1,0 +1,15 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MongoDB
+metadata:
+  name: mm
+  namespace: demo
+spec:
+  version: "6.0.24"
+  terminationPolicy: WipeOut
+  replicas: 1
+  storage:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
