@@ -44,10 +44,19 @@ Tell me which profile was selected and why before proceeding.
 Pass the Step 2 profile as `K3S_PROFILE` (defaults to `large` if unset):
 
 ```bash
-K3S_PROFILE=<small|large|build> bash $HOME/yamls/scripts/machine/make-k3s.bash <IP> [NAME]
+K3S_PROFILE=<small|large|build> bash ~/.claude/scripts/make-k3s.bash <IP> [NAME]
 ```
 
-It uninstalls any existing k3s, sets inotify limits, **writes `/etc/rancher/k3s/config.yaml`
+First it checks whether the target already runs a **pristine** cluster — k3s active and
+`coredns` + `local-path-provisioner` the only deployments cluster-wide, ignoring anything in
+`cert-manager` and `flux-system` (leftovers from a `make-hub` run that died at the ACE
+precheck). If so it skips the
+recreate entirely (just refreshes the kubeconfig) and says so, because reinstalling mints a
+new cluster ID and invalidates any selfhost license pinned to the old one. A profile
+different from the running cluster's is warned about, not applied. Pass `K3S_FORCE=1` to
+recreate anyway.
+
+Otherwise it uninstalls any existing k3s, sets inotify limits, **writes `/etc/rancher/k3s/config.yaml`
 for the chosen profile**, installs k3s (`--disable=traefik --disable=metrics-server
 --tls-san <IP>`), waits for coredns, then runs `copy-kubeconfig.bash` to write
 `$HOME/Downloads/configs/<NAME>.yaml`. Because the config is written *after* the uninstall

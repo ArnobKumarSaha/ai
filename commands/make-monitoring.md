@@ -16,7 +16,7 @@ kubectl config current-context
 Run the script (do not re-implement its logic):
 
 ```bash
-bash $HOME/yamls/scripts/machine/make-monitoring.bash [MANIFEST]
+bash ~/.claude/scripts/make-monitoring.bash [MANIFEST]
 ```
 
 The script, all steps idempotent:

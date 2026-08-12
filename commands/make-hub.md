@@ -14,13 +14,16 @@ If either is missing, stop and ask me.
 Run the script (do not re-implement its logic):
 
 ```bash
-bash $HOME/yamls/scripts/machine/make-hub.bash <IP> "<URL>"
+bash ~/.claude/scripts/make-hub.bash <IP> "<URL>"
 ```
 
 The script: parses the URL, picks prod/ninja creds from `~/.claude/secrets/appscode.env`,
 fetches + base64-decodes the installer readme (fails fast on bad creds), extracts the
 cert-manager apply line and the `## Deploy ACE` block (no helm-install, no openshifter),
-runs `make-k3s.bash`, then over one root SSH session applies cert-manager and the Deploy ACE
+runs `make-k3s.bash` (which reuses an already-running pristine cluster instead of recreating
+it, so a cluster-ID-pinned selfhost license stays valid — cert-manager/flux leftovers from a
+previous failed run still count as pristine), then over one root SSH session
+applies cert-manager and the Deploy ACE
 block in `~/ace`. It prints the site-admin creds and the `https://<IP>` URL at the end.
 
 Use an extended timeout — the `helm upgrade ... --wait` calls can take up to ~10 minutes
