@@ -76,9 +76,9 @@ fi
 sysctl -p
 
 case "$PROFILE" in
-  small) SYS="cpu=250m,memory=512Mi";  KUBE="cpu=250m,memory=512Mi";  EVICT="memory.available<500Mi" ;;
-  large) SYS="cpu=500m,memory=1Gi";    KUBE="cpu=1000m,memory=2Gi";   EVICT="memory.available<1Gi" ;;
-  build) SYS="cpu=4000m,memory=6Gi";   KUBE="cpu=1000m,memory=2Gi";   EVICT="memory.available<1Gi" ;;
+  small) SYS="cpu=250m,memory=512Mi";  KUBE="cpu=250m,memory=512Mi";  EVICT="memory.available<500Mi,nodefs.available<10%,imagefs.available<15%,nodefs.inodesFree<5%" ;;
+  large) SYS="cpu=500m,memory=1Gi";    KUBE="cpu=1000m,memory=2Gi";   EVICT="memory.available<1Gi,nodefs.available<10%,imagefs.available<15%,nodefs.inodesFree<5%" ;;
+  build) SYS="cpu=4000m,memory=6Gi";   KUBE="cpu=1000m,memory=2Gi";   EVICT="memory.available<1Gi,nodefs.available<10%,imagefs.available<15%,nodefs.inodesFree<5%" ;;
 esac
 mkdir -p /etc/rancher/k3s
 cat > /etc/rancher/k3s/config.yaml <<CFG
@@ -87,6 +87,8 @@ kubelet-arg:
   - "system-reserved=$SYS"
   - "kube-reserved=$KUBE"
   - "eviction-hard=$EVICT"
+  # 250 is the ceiling the default /24 per-node pod CIDR can address.
+  - "max-pods=250"
 CFG
 
 # Written before the install so the k3s installer's daemon-reload picks it up.

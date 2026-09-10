@@ -31,11 +31,24 @@ Step 3 as `K3S_PROFILE` (the `build` flag maps to `K3S_PROFILE=build`):
 
 Profiles:
 
-| profile | system-reserved            | kube-reserved              | eviction-hard              |
-|---------|----------------------------|----------------------------|----------------------------|
-| small   | cpu=250m,memory=512Mi      | cpu=250m,memory=512Mi      | memory.available<500Mi     |
-| large   | cpu=500m,memory=1Gi        | cpu=1000m,memory=2Gi       | memory.available<1Gi       |
-| build   | cpu=4000m,memory=6Gi       | cpu=1000m,memory=2Gi       | memory.available<1Gi       |
+| profile | system-reserved            | kube-reserved              | eviction-hard (memory part) |
+|---------|----------------------------|----------------------------|-----------------------------|
+| small   | cpu=250m,memory=512Mi      | cpu=250m,memory=512Mi      | memory.available<500Mi      |
+| large   | cpu=500m,memory=1Gi        | cpu=1000m,memory=2Gi       | memory.available<1Gi        |
+| build   | cpu=4000m,memory=6Gi       | cpu=1000m,memory=2Gi       | memory.available<1Gi        |
+
+Every profile appends the same disk thresholds to `eviction-hard`:
+`nodefs.available<10%,imagefs.available<15%,nodefs.inodesFree<5%`.
+These are kubelet's own defaults, but `eviction-hard` **replaces** the default threshold map
+instead of merging into it — passing only a `memory.available` value leaves the node with no
+disk eviction at all, so it never sets `DiskPressure` and never sheds pods as the disk fills.
+A single-node k3s box with everything on one `local-path` disk then wedges completely at 0
+bytes: kubelet cannot mkdir pod dirs, so pods hang in `ContainerCreating`/`Terminating` and
+even `kubectl exec` fails. Keep the disk thresholds on every profile.
+
+All profiles also get `max-pods=250`, up from kubelet's default 110. 250 is the ceiling the
+default `/24` per-node pod CIDR can address; going higher needs a wider
+`--node-cidr-mask-size`, which this script does not set.
 
 Tell me which profile was selected and why before proceeding.
 
@@ -70,5 +83,6 @@ output verbatim; if it exits non-zero, show me the error — do not retry blindl
 kubectl --kubeconfig $HOME/Downloads/configs/<NAME>.yaml describe node | grep -A6 'Capacity\|Allocatable'
 ```
 
-Allocatable should be less than capacity by the reserved amounts. If it equals capacity,
-the config.yaml wasn't picked up — show me, don't fix silently.
+Allocatable should be less than capacity by the reserved amounts, and `pods` should read
+`250`. If allocatable equals capacity, or `pods` is still `110`, the config.yaml wasn't
+picked up — show me, don't fix silently.
