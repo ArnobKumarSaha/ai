@@ -81,7 +81,12 @@ case "$PROFILE" in
   build) SYS="cpu=4000m,memory=6Gi";   KUBE="cpu=1000m,memory=2Gi";   EVICT="memory.available<1Gi,nodefs.available<10%,imagefs.available<15%,nodefs.inodesFree<5%" ;;
 esac
 mkdir -p /etc/rancher/k3s
+# Pinned: without these kubelet re-detects the primary interface at every start, so a
+# DHCP lease change strands the Node InternalIP, the flannel public-ip annotation and
+# the kubernetes endpoint on a dead address and every in-cluster client times out.
 cat > /etc/rancher/k3s/config.yaml <<CFG
+node-ip: "$IP"
+advertise-address: "$IP"
 kubelet-arg:
   # $PROFILE:
   - "system-reserved=$SYS"
